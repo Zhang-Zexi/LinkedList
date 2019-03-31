@@ -45,16 +45,13 @@ public class LinkedList<E> {
             throw new IllegalArgumentException("add Exception");
         }
 
-        if(index == 0) {
-            addFirst(e);
-        }else {
-            Node prev = dummyNode;
-            for(int i = 0; i < index;i ++) {
-                prev = prev.next;
-            }
-            prev.next = new Node(e, prev.next);
-            size ++;
+        Node prev = dummyNode;
+        for(int i = 0; i < index;i ++) {
+            prev = prev.next;
         }
+        prev.next = new Node(e, prev.next);
+        size ++;
+
     }
 
     public void addFirst(E e) {
@@ -70,6 +67,61 @@ public class LinkedList<E> {
     }
 
 
+    public E get(int index) {
 
+        if(index < 0 || index >= size) {
+            throw new IllegalArgumentException("add failed");
+        }
 
+        Node cur = dummyNode.next;
+        for(int i = 0; i < index; i++) {
+            cur = cur.next;
+        }
+        return cur.e;
+    }
+
+    public E getFirst() {
+        return get(0);
+    }
+
+    public E getLast() {
+        return get(size - 1);
+    }
+
+    public void set(int index, E e) {
+
+        if(index < 0 || index >= size) {
+            throw new IllegalArgumentException("add failed");
+        }
+        Node cur = dummyNode.next;
+        for(int i = 0; i < index; i++) {
+            cur = cur.next;
+        }
+        cur.e = e;
+    }
+
+    public boolean contains(E e) {
+
+        Node cur = dummyNode.next;
+        while(cur != null) {
+            if(cur.e.equals(e)) {
+                return true;
+            }
+            cur = cur.next;
+        }
+        return  false;
+    }
+
+    @Override
+    public String toString() {
+
+        StringBuilder res = new StringBuilder();
+        Node cur = dummyNode.next;
+        while(cur != null) {
+            res.append(cur + "->");
+            cur = cur.next;
+        }
+        res.append("Null");
+        return res.toString();
+    }
 }
