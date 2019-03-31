@@ -23,11 +23,11 @@ public class LinkedList<E> {
         }
     }
 
-    private Node head;
+    private Node dummyNode;
     private int size;
 
     public LinkedList() {
-        head = null;
+        dummyNode = new Node();
         size = 0;
     }
 
@@ -39,14 +39,6 @@ public class LinkedList<E> {
         return size == 0;
     }
 
-    public void addFirst(E e) {
-//        Node node = new Node(e);
-//        node.next = head;
-//        head = node;
-        head = new Node(e, head);
-        size ++;
-    }
-
     public void add(int index, E e) {
 
         if(index < 0 || index > size) {
@@ -56,13 +48,21 @@ public class LinkedList<E> {
         if(index == 0) {
             addFirst(e);
         }else {
-            Node prev = head;
-            for(int i = 0; i < index - 1;i ++) {
+            Node prev = dummyNode;
+            for(int i = 0; i < index;i ++) {
                 prev = prev.next;
             }
             prev.next = new Node(e, prev.next);
             size ++;
         }
+    }
+
+    public void addFirst(E e) {
+//        Node node = new Node(e);
+//        node.next = head;
+//        head = node;
+        add(0 ,e);
+        size ++;
     }
 
     public void addLast(E e) {
