@@ -23,11 +23,11 @@ public class LinkedList<E> {
         }
     }
 
-    private Node dummyNode;
+    private Node dummyHead;
     private int size;
 
     public LinkedList() {
-        dummyNode = new Node();
+        dummyHead = new Node(null, null);
         size = 0;
     }
 
@@ -45,11 +45,15 @@ public class LinkedList<E> {
             throw new IllegalArgumentException("add Exception");
         }
 
-        Node prev = dummyNode;
+        Node prev = dummyHead ;
         for(int i = 0; i < index;i ++) {
             prev = prev.next;
         }
-        prev.next = new Node(e, prev.next);
+
+        Node node = new Node(e);
+        node.next = prev.next;
+        prev.next = node;
+//        prev.next = new Node(e, prev.next);
         size ++;
 
     }
@@ -73,7 +77,7 @@ public class LinkedList<E> {
             throw new IllegalArgumentException("add failed");
         }
 
-        Node cur = dummyNode.next;
+        Node cur = dummyHead.next;
         for(int i = 0; i < index; i++) {
             cur = cur.next;
         }
@@ -93,7 +97,7 @@ public class LinkedList<E> {
         if(index < 0 || index >= size) {
             throw new IllegalArgumentException("add failed");
         }
-        Node cur = dummyNode.next;
+        Node cur = dummyHead.next;
         for(int i = 0; i < index; i++) {
             cur = cur.next;
         }
@@ -102,9 +106,9 @@ public class LinkedList<E> {
 
     public boolean contains(E e) {
 
-        Node cur = dummyNode.next;
+        Node cur = dummyHead.next;
         while(cur != null) {
-            if(cur.e.equals(e)) {
+            if(cur.e.equals(e )) {
                 return true;
             }
             cur = cur.next;
@@ -112,11 +116,37 @@ public class LinkedList<E> {
         return  false;
     }
 
+    public E remove(int index) {
+
+        if(index < 0 || index >= size) {
+            throw new IllegalArgumentException("remove failed");
+        }
+
+        Node prev = dummyHead;
+        for(int i = 0; i < index; i++) {
+            prev = prev.next;
+        }
+        Node retNode = prev.next;
+        prev.next = retNode.next;
+        retNode.next = null;
+        size --;
+
+        return retNode.e;
+    }
+
+    public E removeFirst() {
+        return remove(0);
+    }
+
+    public E  removeLast() {
+        return remove(size - 1);
+    }
+
     @Override
     public String toString() {
 
         StringBuilder res = new StringBuilder();
-        Node cur = dummyNode.next;
+        Node cur = dummyHead.next;
         while(cur != null) {
             res.append(cur + "->");
             cur = cur.next;
