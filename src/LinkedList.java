@@ -45,7 +45,7 @@ public class LinkedList<E> {
             throw new IllegalArgumentException("add Exception");
         }
 
-        Node prev = dummyHead ;
+        Node prev = dummyHead;
         for(int i = 0; i < index;i ++) {
             prev = prev.next;
         }
@@ -63,7 +63,6 @@ public class LinkedList<E> {
 //        node.next = head;
 //        head = node;
         add(0 ,e);
-        size ++;
     }
 
     public void addLast(E e) {
